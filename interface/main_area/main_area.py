@@ -5,6 +5,7 @@ window = tk.Tk()
 window.title("Note 3.3")
 window.geometry("800x600")
 
+
 # Top bar
 header = tk.Frame(window, bg="#8a2be2", height=50)
 header.pack(fill=tk.X)
