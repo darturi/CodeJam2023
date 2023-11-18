@@ -12,7 +12,7 @@ header = tk.Frame(window, bg="#8a2be2", height=50)
 header.pack(fill=tk.X)
 
 # Title and Date
-title = tk.Label(header, text="Note 3.3", font=("Arial", 20, "bold"), bg="#8a2be2", fg="white")
+title = tk.Label(header, text="OurNotes", font=("Arial", 20, "bold"), bg="#8a2be2", fg="white")
 title.pack(side=tk.LEFT, padx=10)
 
 def update_date_label():
@@ -43,6 +43,19 @@ def toggle_text_underline():
     else:
         text.tag_add("underline", start_index, end_index)
         text.tag_configure("underline", font=("Arial", current_size, "underline"))
+
+def toggle_text_italic():
+    start_index = text.index("sel.first")
+    end_index = text.index("sel.last")
+    tags = text.tag_names(start_index)
+    current_size = text.cget("font").split(" ")[-1]
+    if "italic" in tags:
+        text.tag_remove("italic", start_index, end_index)
+        text.tag_configure("normal", font=("Arial", current_size))
+
+    else:
+        text.tag_add("italic", start_index, end_index)
+        text.tag_configure("italic", font=("Arial", current_size, "italic"))
 
 
 def toggle_text_bold():
@@ -113,7 +126,7 @@ underline_button.pack(side=tk.LEFT, padx=5, pady=10)
 
 italic_image = tk.PhotoImage(file='italic-i.pgm')
 true_italic = italic_image.subsample(30,30)
-italic_button = tk.Button(formatting, image=true_italic, borderwidth=0)
+italic_button = tk.Button(formatting, image=true_italic, borderwidth=0, command=toggle_text_italic)
 italic_button.pack(side=tk.LEFT, padx=5, pady=10)
 
 # Add code button
