@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2232263c-0a3c-4c6b-a7bb-bc95124baf1e" name="Changes" comment="Added variable textbox size feature, much cleaner this way">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="2232263c-0a3c-4c6b-a7bb-bc95124baf1e" name="Changes" comment="Adding directories for interface">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/main_area/main_area.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface/main_area/main_area.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,21 +20,79 @@
       </list>
     </option>
   </component>
+  <component name="Git.Pull.Settings">
+    <option name="OPTIONS">
+      <set>
+        <option value="REBASE" />
+      </set>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;barthdrv&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="37f48eb9-20e3-4aaf-b71f-287de56dc9cd" />
+        <option name="url" value="https://github.com/darturi/CodeJam2023.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2YK5d9f5N169475ANwvlUs3RaJG" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="main_area" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CodeJam2023" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/interface/main_area" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/interface/main_area/main_area.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main_area" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -44,51 +102,49 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1700261514682</updated>
+      <workItem from="1700265137249" duration="6247000" />
+      <workItem from="1700273093752" duration="387000" />
+      <workItem from="1700274046595" duration="8616000" />
+      <workItem from="1700330833044" duration="276000" />
+      <workItem from="1700331125310" duration="1802000" />
     </task>
-    <task id="LOCAL-00001" summary="initial commit">
-      <created>1700261981954</created>
+    <task id="LOCAL-00001" summary="test commit 2 barth">
+      <option name="closed" value="true" />
+      <created>1700264998433</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1700261981955</updated>
+      <updated>1700264998433</updated>
     </task>
-    <task id="LOCAL-00002" summary="Test commit 2">
-      <created>1700264937680</created>
+    <task id="LOCAL-00002" summary="test commit 3 barth">
+      <option name="closed" value="true" />
+      <created>1700265176977</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1700264937680</updated>
+      <updated>1700265176977</updated>
     </task>
-    <task id="LOCAL-00003" summary="Built a pop up window that lets users type in english and upon pressing the format button the text will be formatted much in the same manner an IDE would format the text.">
-      <created>1700281436823</created>
+    <task id="LOCAL-00003" summary="test 4 commit barth">
+      <option name="closed" value="true" />
+      <created>1700265415492</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1700281436823</updated>
+      <updated>1700265415492</updated>
     </task>
-    <task id="LOCAL-00004" summary="fixed button name">
-      <created>1700282151218</created>
+    <task id="LOCAL-00004" summary="Adding directories for interface">
+      <option name="closed" value="true" />
+      <created>1700267476704</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1700282151218</updated>
+      <updated>1700267476704</updated>
     </task>
-    <task id="LOCAL-00005" summary="Created note frame with very limited, rough, functionality">
-      <created>1700287673545</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1700287673545</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Added variable textbox size feature, much cleaner this way">
-      <created>1700324052745</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1700324052745</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -102,12 +158,16 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="initial commit" />
-    <MESSAGE value="Test commit 2" />
-    <MESSAGE value="Built a pop up window that lets users type in english and upon pressing the format button the text will be formatted much in the same manner an IDE would format the text." />
-    <MESSAGE value="fixed button name" />
-    <MESSAGE value="Created note frame with very limited, rough, functionality" />
-    <MESSAGE value="Added variable textbox size feature, much cleaner this way" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added variable textbox size feature, much cleaner this way" />
+    <MESSAGE value="test commit 2 barth" />
+    <MESSAGE value="test commit 3 barth" />
+    <MESSAGE value="test 4 commit barth" />
+    <MESSAGE value="Adding directories for interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding directories for interface" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CodeJam2023$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1700265459625" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CodeJam2023$left_sidebar.coverage" NAME="left_sidebar Coverage Results" MODIFIED="1700331168941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/left_sidebar" />
+    <SUITE FILE_PATH="coverage/CodeJam2023$test.coverage" NAME="test Coverage Results" MODIFIED="1700328152380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/left_sidebar" />
+    <SUITE FILE_PATH="coverage/CodeJam2023$main_area.coverage" NAME="main_area Coverage Results" MODIFIED="1700344561696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/main_area" />
   </component>
 </project>
