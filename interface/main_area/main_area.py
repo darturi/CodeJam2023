@@ -1,7 +1,6 @@
 import tkinter as tk
 from datetime import datetime
 from PIL import Image, ImageTk
-import tkinter.ttk as ttk
 
 # Main Window
 window = tk.Tk()
