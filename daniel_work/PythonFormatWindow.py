@@ -1,189 +1,128 @@
+from NoteFrame import NoteFrame
 import tkinter as tk
 
 
-class Pad(tk.Frame):
-    orange_label_name = "orange_coloring"
-    green_label_name = "green_coloring"
-    yellow_label_name = "yellow_coloring"
-    pink_label_name = "pink_coloring"
-    purple_label_name = "purple_coloring"
-    grey_label_name = "grey_coloring"
-    py_dict = {
-        # Keywords
-        "False": ["False", orange_label_name],
-        "await": ["await ", orange_label_name],
-        "else": ["else:", orange_label_name],
-        "import": ["import ", orange_label_name],
-        "pass": ["pass", orange_label_name],
-        "None": ["None", orange_label_name],
-        "break": ["break", orange_label_name],
-        "except": ["except:", orange_label_name],
-        " in ": [" in ", orange_label_name],
-        "raise": ["raise ", orange_label_name],
-        "True": ["True", orange_label_name],
-        "class": ["class ", orange_label_name],
-        "finally": ["finally:", orange_label_name],
-        " is ": [" is ", orange_label_name],
-        "return": ["return", orange_label_name],
-        "and ": [" and ", orange_label_name],
-        "continue": ["continue", orange_label_name],
-        "for": ["for ", orange_label_name],
-        "lambda": ["lambda ", orange_label_name],
-        "try": ["try:", orange_label_name],
-        "as ": [" as ", orange_label_name],
-        "def": ["def ", orange_label_name],
-        "from": [" from ", orange_label_name],
-        "nonlocal": ["nonlocal ", orange_label_name],
-        "while": ["while ", orange_label_name],
-        "assert": ["assert ", orange_label_name],
-        "del": ["del ", orange_label_name],
-        "global": ["global ", orange_label_name],
-        "not": ["not ", orange_label_name],
-        "with": ["with ", orange_label_name],
-        "async": ["async ", orange_label_name],
-        "elif": ["elif ", orange_label_name],
-        "if": ["if ", orange_label_name],
-        "or": [" or ", orange_label_name],
-        "yield": ["yield ", orange_label_name],
-
-        # Grammer
-        ",": [",", orange_label_name],
-        # "\\": ["\ ", orange_label_name],
-
-        # Brackets / Parenthesis
-        "(": ["(", yellow_label_name],
-        ")": [")", yellow_label_name],
-        "[": ["[", yellow_label_name],
-        "]": ["]", yellow_label_name],
-        "{": ["{", yellow_label_name],
-        "}": ["}", yellow_label_name],
-
-        # self
-        "self": ["self.", purple_label_name],
-
-        # MAYBE ADD NUMBERS????
-    }
-    symbol_enclosure = {
-        '__': [r'(?:__).*(?:__)', pink_label_name],
-        '\'\'\'': [r'(?:\'\'\').*(?:\'\'\')', green_label_name],
-        '\"': [r'(?:").*(?:")', green_label_name],
-        "\'": [r"(?:').*(?:')", green_label_name],
-        '#': [r'(?:#).*(?:\n)', grey_label_name],
-        '\"\"\"': [r'(?:""").*(?:""")', green_label_name],
-    }
+class MainWindow(tk.Frame):
+    window_title = "OurNotes"
+    window_geometry = "800x600"
+    accent_color = "#8a2be2"
+    main_foreground = "white"
+    light_grey = "#f0f0f0"
 
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
+        self.parent = parent
 
-        # Define Font Constants
-        self.font_size = 14
-        self.font_family = "Andale Mono"
+        self.note_stockpile = []
 
-        # Boilerplate
-        self.toolbar = tk.Frame(self, bg="#eee")
-        self.toolbar.pack(side="top", fill="x")
+        self.parent.title(MainWindow.window_title)
+        self.parent.geometry(MainWindow.window_geometry)
 
-        # Define format button
-        self.format_btn = tk.Button(self.toolbar, text="Format", command=self.format)
-        self.format_btn.pack(side="left")
+        # Top bar
+        self.header = tk.Frame(self.parent, bg=MainWindow.accent_color, height=50)
+        self.header.pack(fill=tk.X)
 
-        # Define textbox for user input
-        self.input = tk.Text(self)
+        # Title and Date
+        self.title = tk.Label(self.header, text="OurNotes", font=("Arial", 20, "bold"),
+                         bg=MainWindow.accent_color, fg=MainWindow.main_foreground)
+        self.title.pack(side=tk.LEFT, padx=10)
+        self.date = tk.Label(self.header, text="", font=("Arial", 12),
+                        bg=MainWindow.accent_color, fg=MainWindow.main_foreground)
+        self.date.pack(side=tk.RIGHT, padx=10)
 
-        # Configure default color of text window
-        self.input.config(fg="white", bg="#2B2B2B", insertbackground="white")
+        # Side Frame
+        self.sidebar = tk.Frame(self.parent, bg=MainWindow.light_grey, width=200)
+        self.sidebar.pack(side=tk.LEFT, fill=tk.Y)
 
-        self.input.insert("end", "IN -- Select part of text and then click 'Bold'...")
-        self.input.focus()
-        self.input.pack(fill="both", expand=True)
+        # Create Note Links in sidebar
+        self.notes_container = tk.LabelFrame(self.sidebar, text="Notes", font=("Arial", 12, "bold"),
+                                             bg=MainWindow.light_grey, fg=MainWindow.accent_color)
+        self.notes_container.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        for note in self.note_stockpile:
+            note_btn = tk.Button(self.notes_container, text=note.get_title(), font=("Arial", 12),
+                                 bg=MainWindow.accent_color, fg=MainWindow.accent_color, width=15)
+            note_btn.pack(fill="x", expand=True)
 
-        # Define colored fonts
-        self.input.tag_configure(Pad.orange_label_name, foreground="orange")
-        self.input.tag_configure(Pad.yellow_label_name, foreground="yellow")
-        self.input.tag_configure(Pad.green_label_name, foreground="green")
-        self.input.tag_configure(Pad.purple_label_name, foreground="purple")
-        self.input.tag_configure(Pad.pink_label_name, foreground="hot pink")
-        self.input.tag_configure(Pad.grey_label_name, foreground="#848484")
+        # New Note and New Folder Buttons
+        self.new_note = tk.Button(self.sidebar, text="New Note", font=("Arial", 12),
+                                  bg=MainWindow.accent_color, fg=MainWindow.accent_color, width=15,
+                                  command=self.new_note_cmd)
+        self.new_note.pack(side=tk.BOTTOM, padx=10, pady=10)
+        self.new_folder = tk.Button(self.sidebar, text="New Folder", font=("Arial", 12),
+                                    bg=MainWindow.accent_color, fg=MainWindow.accent_color, width=15)
+        self.new_folder.pack(side=tk.BOTTOM, padx=10, pady=10)
 
-    """
-    def format(self):
-        # DRAFT OF ALGORITHM
-        keywords = [
-            "False", "await ", "import ", "pass", "None", "break", "def ",
-            " in ", "raise", "True", "class", "finally", "is", "return", " and ",
-            "continue", "for ", "lambda", " as ", "from ", "nonlocal",
-            "while ", "assert", "del ", "global ", "not ", "with", "async", "elif ", "if ",
-            " or ", "yield"
-        ]
+        # Define Note-Taking Frame
+        self.note_frame = tk.Frame(self.parent, bg=MainWindow.main_foreground)
+        self.note_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        keywords_w_colon = [
-            "except",
-            "raise", "True", "class", "finally", "is", "return",
-            "continue", "for ", "lambda", "try", "nonlocal",
-            "assert", "with", "async", "elif ", "if ",
-            "yield"
-        ]
+        #self.note_frame.grid_rowconfigure(0, weight=1)
+        #self.note_frame.grid_columnconfigure(0, weight=1)
 
-        for word in keywords:
-            offset = '+%dc' % len(word)
-            pos_start = self.input.search(word, '1.0', "end")
-            while pos_start:
-                print(word)
-                # create end position by adding (as string "+5c") number of chars in searched word
-                pos_end = pos_start + offset
-                print("\t" + str(pos_start))
-                print("\t" + str(pos_end))
+        #self.note_frame_dict = {}
 
-                # add tag
-                self.input.tag_add('orange_coloring', pos_start, pos_end)
+        """ # Set up start frame
+        start_frame = tk.Frame(self.note_frame, bg=MainWindow.main_foreground)
+        start_frame_frame = start_frame(parent=self.note_frame, controller=self)
+        self.note_frame_dict["start frame"] = start_frame_frame
+        start_frame_frame.grid(row=0, column=0, sticky="nsew")"""
 
-                # search again from pos_end to the end of text (END)
-                pos_start = self.input.search(word, pos_end, "end")
-    """
+        #for note in self.note_stockpile:
+        #    frame = note(parent=self.note_frame, controller=self)
+        #    self.note_frame_dict[note.get_title()] = frame
+        #    frame.grid(row=0, column=0, sticky="nsew")
 
-    def format(self):
-        # DRAFT OF ALGORITHM
+        # Define Empty Note-Taking Area Placeholder
+        # self.note = tk.Frame(self.note_frame, bg=MainWindow.main_foreground)
+        # self.note.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        # Words with set/defined length
-        for word_key in Pad.py_dict:
-            search_term, color = Pad.py_dict[word_key]
-            offset = '+%dc' % (len(word_key))
-            pos_start = self.input.search(search_term, '1.0', "end")
-            while pos_start:
-                print(word_key)
-                print("---" + search_term + "---")
-                print(color)
-                # create end position by adding (as string "+5c") number of chars in searched word
-                pos_end = pos_start + offset
-                print("\t" + str(pos_start))
-                print("\t" + str(pos_end))
+    def new_note_cmd(self):
+        # return None
+        # self.note_frame.forget()
+        if len(self.note_stockpile) > 0:
+            self.note_stockpile[-1].forget_self()
+        self.forget_frame_contents(self.note_frame)
+        self.update()
+        #    self.note.forget()
+        #self.note.destroy()
 
-                # add tag
-                self.input.tag_add(color, pos_start, pos_end)
+        new_note = NoteFrame(self.note_frame, self)
+        self.note_stockpile.append(new_note)
+        print(len(self.note_stockpile))
+        self.update_side_bar()
+        #self.note.pack_forget()
+        #for note in self.note_stockpile[:-1]:
+        #    note.pack_forget()
 
-                # search again from pos_end to the end of text (END)
-                pos_start = self.input.search(word_key, pos_end, "end")
+        self.note = new_note
+        self.note.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        # Colored sections with no set length (enclosed in color)
-        for enclosure_key in Pad.symbol_enclosure:
-            char_count = tk.IntVar()
-            word_key, color = Pad.symbol_enclosure[enclosure_key]
-            pos_start = self.input.search(word_key, "1.0", "end", count=char_count, regexp=True)
-            while pos_start:
-                start = "%s + 0 chars" % pos_start
-                # end = "%s + %d chars" % (index, char_count.get())
-                end = "%s + %d chars" % (pos_start, char_count.get())
-                print(enclosure_key)
-                print(start, type(start))
-                print(end)
-                self.input.tag_add(color, start, end)
+    def update_side_bar(self):
+        self.clear_frame(self.notes_container)
 
-                pos_start = self.input.search(word_key, end, "end", count=char_count, regexp=True)
+        for note in self.note_stockpile:
+            note_btn = tk.Button(self.notes_container, text=note.get_title(), font=("Arial", 12),
+                                 bg=MainWindow.accent_color, fg=MainWindow.accent_color, width=15)
+            note_btn.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+    @staticmethod
+    def clear_frame(frame_victim):
+        for widgets in frame_victim.winfo_children():
+            widgets.destroy()
+
+    @staticmethod
+    def forget_frame_contents(victim_frame):
+        for widgets in victim_frame.winfo_children():
+            widgets.pack_forget()
+
+    def load_note(self, note_name):
+        return None
+
 
 
 def demo():
     root = tk.Tk()
-    Pad(root).pack(expand=1, fill="both")
+    MainWindow(root)
     root.mainloop()
 
 

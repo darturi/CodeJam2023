@@ -2,7 +2,7 @@ import random
 import tkinter as tk
 from datetime import date
 from tkinter import font
-from tkinter.font import *
+import pickle
 
 
 class Pad(tk.Frame):
@@ -109,7 +109,7 @@ class Pad(tk.Frame):
         self.input.tag_configure(Pad.orange_label_name, foreground="orange")
         self.input.tag_configure(Pad.yellow_label_name, foreground="yellow")
         self.input.tag_configure(Pad.green_label_name, foreground="green")
-        self.input.tag_configure(Pad.purple_label_name, foreground="purple")
+        self.input.tag_configure(Pad.purple_label_name, foreground="#936080")
         self.input.tag_configure(Pad.pink_label_name, foreground="hot pink")
         self.input.tag_configure(Pad.grey_label_name, foreground="#848484")
 
@@ -269,7 +269,7 @@ class PlainPad(tk.Frame):
                 self.input.tag_remove("italic", "sel.first", "sel.last")
             else:
                 self.input.tag_add("italic", "sel.first", "sel.last")
-            # self.input()
+            #self.input()
         except:
             pass
 
@@ -288,16 +288,15 @@ class PlainPad(tk.Frame):
                 # self.input.tag_add("bold", "sel.first", "sel.last")
                 self.input.tag_add("italic", "sel.first", "sel.last")
 
-            # current_tags = self.input.tag_names("sel.first")
+            #current_tags = self.input.tag_names("sel.first")
             # If statment to see if tag has been set
             elif "bold" in current_tags:
                 self.input.tag_remove("bold", "sel.first", "sel.last")
             else:
                 self.input.tag_add("bold", "sel.first", "sel.last")
-            # self.input()
+            #self.input()
         except:
             pass
-
     """
     def update_text(self):
         # Create our font
@@ -319,7 +318,7 @@ class PlainPad(tk.Frame):
 
 
 class NoteFrame(tk.Frame):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent, controller, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         """
         self.parent = parent
@@ -346,14 +345,20 @@ class NoteFrame(tk.Frame):
         PlainPad(parent).grid(row=self.current_row, column=0)
         self.current_row += 1
         """
+
+        self.controller = controller
+
         self.name = str(random.Random())
         self.date_created = date.today().strftime("%B %d, %Y")
+
+        self.note_contents = []
 
         # Define Font Constants
         self.font_size = 14
         self.font_family = "Helvetica"
 
         self.parent = parent
+        self.associated_folder = None
 
         # Create Header Frame
         self.header_frame = tk.Frame(self.parent)
@@ -370,7 +375,7 @@ class NoteFrame(tk.Frame):
         self.title_field.grid(row=0, column=0)
 
         # Title area 0,1 --> Set title button
-        self.add_title_btn = tk.Button(self.title_frame, text="Set Title", command=self.set_title_cmd)
+        self.add_title_btn = tk.Button(self.title_frame, text="Save", command=self.save_note)
         self.add_title_btn.grid(row=0, column=1)
 
         # Title area 1,0 --> Date note was created
@@ -390,8 +395,8 @@ class NoteFrame(tk.Frame):
         self.toolbar_text_edit.grid(row=0, column=0)
 
         # Toolbar Area 0,1 --> Add Code Button Frame
-        # self.toolbar_text_edit = tk.Frame(self.toolbar, bg="#eee")
-        # self.toolbar.grid(row=0, column=1)
+        #self.toolbar_text_edit = tk.Frame(self.toolbar, bg="#eee")
+        #self.toolbar.grid(row=0, column=1)
 
         # Define note frame
         self.note_frame = tk.Frame(self.parent)
@@ -407,7 +412,7 @@ class NoteFrame(tk.Frame):
         self.italics_btn.grid(row=0, column=1)
 
         # Toolbar area 0,2 --> underline button
-        self.underline_btn = tk.Button(self.toolbar_text_edit, text="Underline")  # , command=self.underline_text_cmd)
+        self.underline_btn = tk.Button(self.toolbar_text_edit, text="Underline") #, command=self.underline_text_cmd)
         self.underline_btn.grid(row=0, column=2)
 
         # Toolbar area 0,3 --> add code block button
@@ -423,11 +428,32 @@ class NoteFrame(tk.Frame):
 
         # Add scroll wheel
 
+
         # Define pad list
         self.pad_list = [PlainPad(self.note_frame)]
 
         for pad in self.pad_list:
             pad.pack(fill="x", expand=False)
+
+    # Save contents of note
+    def save_note(self):
+        self.set_title_cmd()
+        for pad in self.pad_list:
+            self.note_contents.append(pad.input.get("1.0", "end"))
+        f = open(self.name + ".pkl", "wb")
+        pickle.dump(self.note_contents, f)
+        f.close()
+
+    def forget_self(self):
+        self.controller.pack_forget()
+
+    # Some Get Methods
+    def get_title(self):
+        self.set_title_cmd()
+        return self.name
+
+    def get_date(self):
+        return self.date_created
 
     def add_code_block(self):
         self.pad_list.append(Pad(self.note_frame))
@@ -467,7 +493,7 @@ class NoteFrame(tk.Frame):
 
 def demo():
     root = tk.Tk()
-    NoteFrame(root).pack(expand=1, fill="both")
+    NoteFrame(root, root).pack(expand=1, fill="both")
     root.mainloop()
 
 
