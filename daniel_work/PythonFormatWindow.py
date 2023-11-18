@@ -84,8 +84,8 @@ class Pad(tk.Frame):
         self.toolbar.pack(side="top", fill="x")
 
         # Define format button
-        self.bold_btn = tk.Button(self.toolbar, text="Format", command=self.format)
-        self.bold_btn.pack(side="left")
+        self.format_btn = tk.Button(self.toolbar, text="Format", command=self.format)
+        self.format_btn.pack(side="left")
 
         # Define textbox for user input
         self.input = tk.Text(self)
