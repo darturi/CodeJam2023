@@ -1,5 +1,4 @@
 import tkinter as tk
-import random
 
 
 class Pad(tk.Frame):
@@ -84,21 +83,23 @@ class Pad(tk.Frame):
 
         # Define empty toolbar
         self.toolbar = tk.Frame(self, bg="#eee")
-        self.toolbar.pack(side="top", fill="x")
+        self.toolbar.pack(side="bottom", fill="x")
 
         # Define format button
         self.format_btn = tk.Button(self.toolbar, text="Format", command=self.format)
-        self.format_btn.pack(side="left")
+        self.format_btn.pack(side="right")
 
         # Define textbox for user input
-        self.input = tk.Text(self)
+        self.input = tk.Text(self, height=2)
 
         # Configure default color of text window
         self.input.config(fg="white", bg="#2B2B2B", insertbackground="white")
 
-        self.input.insert("end", "IN -- Select part of text and then click 'Bold'...")
+        # self.input.insert("end", "IN -- Select part of text and then click 'Bold'...")
         self.input.focus()
         self.input.pack(fill="both", expand=True)
+        # self.input.bind("<Command-v>", self.update_size) BUG
+        self.input.bind("<Key>", self.update_size)
 
         # Define colored fonts
         self.input.tag_configure(Pad.orange_label_name, foreground="orange")
@@ -147,6 +148,27 @@ class Pad(tk.Frame):
 
                 pos_start = self.input.search(word_key, end, "end", count=char_count, regexp=True)
 
+    def update_size(self, event):
+        widget_height = self.get_optimal_height()
+        self.input.config(height=widget_height)
+
+    def get_optimal_height(self):
+        # Calculate the optimal height based on the content
+        widget_height = int(self.input.index(tk.END).split('.')[0])
+        widget_width = int(self.input.cget("width"))
+
+        line_count = 1
+        current_line_length = 0
+
+        for char in self.input.get("1.0", tk.END):
+            if char == '\n' or current_line_length >= widget_width:
+                line_count += 1
+                current_line_length = 0
+            else:
+                current_line_length += 1
+
+        return max(2, line_count)
+
 
 class PlainPad(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -159,10 +181,32 @@ class PlainPad(tk.Frame):
         self.font_family = "Helvetica"
 
         # Define textbox for user input
-        self.input = tk.Text(self)
+        self.input = tk.Text(self, height=2)
 
         self.input.focus()
         self.input.pack(fill="x", expand=False)
+        self.input.bind("<Key>", self.update_size)
+
+    def update_size(self, event):
+        widget_height = self.get_optimal_height()
+        self.input.config(height=widget_height)
+
+    def get_optimal_height(self):
+        # Calculate the optimal height based on the content
+        widget_height = int(self.input.index(tk.END).split('.')[0])
+        widget_width = int(self.input.cget("width"))
+
+        line_count = 1
+        current_line_length = 0
+
+        for char in self.input.get("1.0", tk.END):
+            if char == '\n' or current_line_length >= widget_width:
+                line_count += 1
+                current_line_length = 0
+            else:
+                current_line_length += 1
+
+        return max(2, line_count)
 
 
 class NoteFrame(tk.Frame):
