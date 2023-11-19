@@ -1,6 +1,7 @@
 import tkinter as tk
 from datetime import datetime
 from PIL import Image, ImageTk
+from tkinter import font
 
 # Main Window
 window = tk.Tk()
@@ -36,60 +37,114 @@ def toggle_text_underline():
     tags = text.tag_names(start_index)
     current_size = text.cget("font").split(" ")[-1]
 
-    if "underline" in tags:
+    if "bold_underline_italic" in tags:
+        text.tag_remove("bold_underline_italic", start_index, end_index)
+        text.tag_add("bold_italic", start_index, end_index)
+        text.tag_configure("bold_italic", font=("Arial", current_size, "bold", "italic"))
+    elif "bold_underline" in tags:
+        text.tag_remove("bold_underline", start_index, end_index)
+        text.tag_add("bold", start_index, end_index)
+        text.tag_configure("bold", font=("Arial", current_size, "bold"))
+    elif "bold_italic" in tags:
+        text.tag_remove("bold_italic", start_index, end_index)
+        text.tag_add("bold_underline_italic", start_index, end_index)
+        text.tag_configure("bold_underline_italic", font=("Arial", current_size,  "bold", "underline", "italic"))
+    elif "underline_italic" in tags:
+        text.tag_remove("underline_italic", start_index, end_index)
+        text.tag_add("italic", start_index, end_index)
+        text.tag_configure("italic", font=("Arial", current_size, "italic"))
+    elif "bold" in tags:
+        text.tag_remove("bold", start_index, end_index)
+        text.tag_add("bold_underline", start_index, end_index)
+        text.tag_configure("bold_underline", font=("Arial", current_size, "bold", "underline"))
+    elif "underline" in tags:
         text.tag_remove("underline", start_index, end_index)
+        text.tag_add("normal", start_index, end_index)
         text.tag_configure("normal", font=("Arial", current_size))
-
+    elif "italic" in tags:
+        text.tag_remove("italic", start_index, end_index)
+        text.tag_add("underline_italic", start_index, end_index)
+        text.tag_configure("underline_italic", font=("Arial", current_size, "underline", "italic"))
     else:
+        text.tag_remove("normal", start_index, end_index)
         text.tag_add("underline", start_index, end_index)
-        if "bold" and "italic" in tags:
-            text.tag_configure("underline", font=("Arial", current_size, "underline", "bold", "italic"))
-        elif "italic" in tags:
-            text.tag_configure("underline", font=("Arial", current_size, "underline", "italic"))
-        elif "bold" in tags:
-            text.tag_configure("underline", font=("Arial", current_size, "underline", "bold"))
-        else:
-            text.tag_configure("underline", font=("Arial", current_size, "underline"))
-
+        text.tag_configure("underline", font=("Arial", current_size, "underline"))
 
 def toggle_text_italic():
     start_index = text.index("sel.first")
     end_index = text.index("sel.last")
     tags = text.tag_names(start_index)
     current_size = text.cget("font").split(" ")[-1]
-    if "italic" in tags:
+    if "bold_underline_italic" in tags:
+        text.tag_remove("bold_underline_italic", start_index, end_index)
+        text.tag_add("bold_underline", start_index, end_index)
+        text.tag_configure("bold_underline", font=("Arial", current_size, "bold", "underline"))
+    elif "bold_underline" in tags:
+        text.tag_remove("bold_underline", start_index, end_index)
+        text.tag_add("bold_underline_italic", start_index, end_index)
+        text.tag_configure("bold_underline_italic", font=("Arial", current_size, "bold", "underline", "italic"))
+    elif "bold_italic" in tags:
+        text.tag_remove("bold_italic", start_index, end_index)
+        text.tag_add("bold", start_index, end_index)
+        text.tag_configure("bold", font=("Arial", current_size, "bold"))
+    elif "underline_italic" in tags:
+        text.tag_remove("underline_italic", start_index, end_index)
+        text.tag_add("underline", start_index, end_index)
+        text.tag_configure("underline", font=("Arial", current_size, "underline"))
+    elif "bold" in tags:
+        text.tag_remove("bold", start_index, end_index)
+        text.tag_add("bold_italic", start_index, end_index)
+        text.tag_configure("bold_italic", font=("Arial", current_size, "bold", "italic"))
+    elif "underline" in tags:
+        text.tag_remove("underline", start_index, end_index)
+        text.tag_add("underline_italic", start_index, end_index)
+        text.tag_configure("underline_italic", font=("Arial", current_size, "underline", "italic"))
+    elif "italic" in tags:
         text.tag_remove("italic", start_index, end_index)
+        text.tag_add("normal", start_index, end_index)
         text.tag_configure("normal", font=("Arial", current_size))
     else:
+        text.tag_remove("normal", start_index, end_index)
         text.tag_add("italic", start_index, end_index)
-        if "bold" and "underline" in tags:
-            text.tag_configure("italic", font=("Arial", current_size, "underline", "bold", "italic"))
-        elif "underline" in tags:
-            text.tag_configure("italic", font=("Arial", current_size, "underline", "italic"))
-        elif "bold" in tags:
-            text.tag_configure("italic", font=("Arial", current_size, "italic", "bold"))
-        else:
-            text.tag_configure("italic", font=("Arial", current_size, "italic"))
-
+        text.tag_configure("italic", font=("Arial", current_size, "italic"))
 
 def toggle_text_bold():
     start_index = text.index("sel.first")
     end_index = text.index("sel.last")
     tags = text.tag_names(start_index)
     current_size = text.cget("font").split(" ")[-1]
-    if "bold" in tags:
+    if "bold_underline_italic" in tags:
+        text.tag_remove("bold_underline_italic", start_index, end_index)
+        text.tag_add("underline_italic", start_index, end_index)
+        text.tag_configure("underline_italic", font=("Arial", current_size, "italic", "underline"))
+    elif "bold_underline" in tags:
+        text.tag_remove("bold_underline", start_index, end_index)
+        text.tag_add("underline", start_index, end_index)
+        text.tag_configure("underline", font=("Arial", current_size, "underline"))
+    elif "bold_italic" in tags:
+        text.tag_remove("bold_italic", start_index, end_index)
+        text.tag_add("italic", start_index, end_index)
+        text.tag_configure("italic", font=("Arial", current_size, "italic"))
+    elif "underline_italic" in tags:
+        text.tag_remove("underline_italic", start_index, end_index)
+        text.tag_add("bold_underline_italic", start_index, end_index)
+        text.tag_configure("bold_underline_italic", font=("Arial", current_size, "bold", "underline", "italic"))
+    elif "bold" in tags:
         text.tag_remove("bold", start_index, end_index)
+        text.tag_add("normal", start_index, end_index)
         text.tag_configure("normal", font=("Arial", current_size))
+    elif "underline" in tags:
+        text.tag_remove("underline", start_index, end_index)
+        text.tag_add("bold_underline", start_index, end_index)
+        text.tag_configure("bold_underline", font=("Arial", current_size, "bold", "underline"))
+    elif "italic" in tags:
+        text.tag_remove("italic", start_index, end_index)
+        text.tag_add("bold_italic", start_index, end_index)
+        text.tag_configure("bold_italic", font=("Arial", current_size, "bold", "italic"))
     else:
+        text.tag_remove("normal", start_index, end_index)
         text.tag_add("bold", start_index, end_index)
-        if "italic" and "underline" in tags:
-            text.tag_configure("bold", font=("Arial", current_size, "underline", "bold", "italic"))
-        elif "underline" in tags and "italic" not in tags:
-            text.tag_configure("bold", font=("Arial", current_size, "underline", "bold"))
-        elif "italic" in tags:
-            text.tag_configure("bold", font=("Arial", current_size, "italic", "bold"))
-        else:
-            text.tag_configure("bold", font=("Arial", current_size, "bold"))
+        text.tag_configure("bold", font=("Arial", current_size, "bold"))
 
 # Date Label
 date = tk.Label(header, text="", font=("Arial", 12), bg="#8a2be2", fg="white")
@@ -188,6 +243,5 @@ increase_button.pack(side=tk.LEFT, pady=10)
 # Textbox
 text = tk.Text(main, font=("Arial", 12), bg="white", fg="black", insertbackground='black')
 text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-
 
 window.mainloop()
