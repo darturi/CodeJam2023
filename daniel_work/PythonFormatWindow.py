@@ -1,5 +1,6 @@
 from NoteFrame import NoteFrame
 import tkinter as tk
+from functools import partial
 
 
 class MainWindow(tk.Frame):
@@ -38,10 +39,6 @@ class MainWindow(tk.Frame):
         self.notes_container = tk.LabelFrame(self.sidebar, text="Notes", font=("Arial", 12, "bold"),
                                              bg=MainWindow.light_grey, fg=MainWindow.accent_color)
         self.notes_container.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-        for note in self.note_stockpile:
-            note_btn = tk.Button(self.notes_container, text=note.get_title(), font=("Arial", 12),
-                                 bg=MainWindow.accent_color, fg=MainWindow.accent_color, width=15)
-            note_btn.pack(fill="x", expand=True)
 
         # New Note and New Folder Buttons
         self.new_note = tk.Button(self.sidebar, text="New Note", font=("Arial", 12),
@@ -56,53 +53,56 @@ class MainWindow(tk.Frame):
         self.note_frame = tk.Frame(self.parent, bg=MainWindow.main_foreground)
         self.note_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        #self.note_frame.grid_rowconfigure(0, weight=1)
-        #self.note_frame.grid_columnconfigure(0, weight=1)
+        self.frames_dict = {}
+        self.note_frame_sub = tk.Frame(self.note_frame, bg=MainWindow.main_foreground)
+        self.note_frame_sub.rowconfigure(0, weight=1)
+        self.note_frame_sub.columnconfigure(0, weight=1)
 
-        #self.note_frame_dict = {}
+        self.note_frame_sub.grid()
 
-        """ # Set up start frame
-        start_frame = tk.Frame(self.note_frame, bg=MainWindow.main_foreground)
-        start_frame_frame = start_frame(parent=self.note_frame, controller=self)
-        self.note_frame_dict["start frame"] = start_frame_frame
-        start_frame_frame.grid(row=0, column=0, sticky="nsew")"""
-
-        #for note in self.note_stockpile:
-        #    frame = note(parent=self.note_frame, controller=self)
-        #    self.note_frame_dict[note.get_title()] = frame
-        #    frame.grid(row=0, column=0, sticky="nsew")
-
-        # Define Empty Note-Taking Area Placeholder
-        # self.note = tk.Frame(self.note_frame, bg=MainWindow.main_foreground)
-        # self.note.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+    def switch(self, frame_id):
+        self.update_side_bar()
+        self.frames_dict[frame_id].tkraise()
 
     def new_note_cmd(self):
-        # return None
-        # self.note_frame.forget()
-        if len(self.note_stockpile) > 0:
-            self.note_stockpile[-1].forget_self()
-        self.forget_frame_contents(self.note_frame)
-        self.update()
-        #    self.note.forget()
-        #self.note.destroy()
+        self.forget_frame_contents(self.note_frame_sub)
 
-        new_note = NoteFrame(self.note_frame, self)
+
+        self.intermediate_frame = tk.Frame(self.note_frame_sub, bg=MainWindow.main_foreground)
+        self.intermediate_frame.grid()
+
+
+
+        new_note = NoteFrame(self.intermediate_frame)
         self.note_stockpile.append(new_note)
-        print(len(self.note_stockpile))
         self.update_side_bar()
-        #self.note.pack_forget()
-        #for note in self.note_stockpile[:-1]:
-        #    note.pack_forget()
 
+        self.intermediate_frame.grid(row=0, column=0, sticky="nsew")
+        self.frames_dict[new_note.get_id()] = self.intermediate_frame
+        # self.load_note_into_note_frame(new_note)
+        self.switch(new_note.get_id())
+
+    def open_note(self, note_id):
+        self.forget_frame_contents(self.note_frame_sub)
+
+        for note in self.note_stockpile:
+            if note.get_id() == note_id:
+                self.switch(note.get_id())
+                break
+
+    def load_note_into_note_frame(self, new_note):
         self.note = new_note
         self.note.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
     def update_side_bar(self):
         self.clear_frame(self.notes_container)
 
-        for note in self.note_stockpile:
+        for i in range(len(self.note_stockpile)):
+            note = self.note_stockpile[i]
+
             note_btn = tk.Button(self.notes_container, text=note.get_title(), font=("Arial", 12),
-                                 bg=MainWindow.accent_color, fg=MainWindow.accent_color, width=15)
+                                 bg=MainWindow.accent_color, fg=MainWindow.accent_color, width=15,
+                                 command=lambda x=i: self.open_note(x))
             note_btn.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
     @staticmethod

@@ -79,8 +79,6 @@ class Pad(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
 
-        # self.id = random.random()
-
         # Define Font Constants
         self.font_size = 14
         self.font_family = "Andale Mono"
@@ -114,8 +112,6 @@ class Pad(tk.Frame):
         self.input.tag_configure(Pad.grey_label_name, foreground="#848484")
 
     def format(self):
-        # DRAFT OF ALGORITHM
-
         # Words with set/defined length
         for word_key in Pad.py_dict:
             search_term, color = Pad.py_dict[word_key]
@@ -143,7 +139,6 @@ class Pad(tk.Frame):
             pos_start = self.input.search(word_key, "1.0", "end", count=char_count, regexp=True)
             while pos_start:
                 start = "%s + 0 chars" % pos_start
-                # end = "%s + %d chars" % (index, char_count.get())
                 end = "%s + %d chars" % (pos_start, char_count.get())
                 print(enclosure_key)
                 print(start, type(start))
@@ -177,8 +172,6 @@ class Pad(tk.Frame):
 class PlainPad(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
-
-        # self.id = random.random()
 
         # Define Font Constants
         self.font_size = 14
@@ -225,43 +218,17 @@ class PlainPad(tk.Frame):
 
         return max(2, line_count)
 
-    """def italics_it(self):
-        try:
-            # Define Current tags
-            current_tags = self.input.tag_names("sel.first")
-
-            if "bold" in current_tags and "italics" not in current_tags:
-                self.input.tag_remove("bold", "sel.first", "sel.last")
-                self.input.tag_add("bold_italic", "sel.first", "sel.last")
-
-            elif "bold_italic" in current_tags:
-                self.input.tag_remove("bold_italic", "sel.first", "sel.last")
-                self.input.tag_add("italic", "sel.first", "sel.last")
-                self.input.tag_add("bold", "sel.first", "sel.last")
-
-            current_tags = self.input.tag_names("sel.first")
-            # If statment to see if tag has been set
-            if "italic" in current_tags:
-                self.input.tag_remove("italic", "sel.first", "sel.last")
-            else:
-                self.input.tag_add("italic", "sel.first", "sel.last")
-            #self.input()
-        except:
-            pass"""
 
     def italics_it(self):
         try:
             # Define Current tags
             current_tags = self.input.tag_names("sel.first")
-            # print("Italics")
-            # print('\t', current_tags)
             if "bold" in current_tags and "italics" not in current_tags:
                 self.input.tag_remove("bold", "sel.first", "sel.last")
                 self.input.tag_add("bold_italic", "sel.first", "sel.last")
 
             elif "bold_italic" in current_tags:
                 self.input.tag_remove("bold_italic", "sel.first", "sel.last")
-                # self.input.tag_add("italic", "sel.first", "sel.last")
                 self.input.tag_add("bold", "sel.first", "sel.last")
 
             # If statment to see if tag has been set
@@ -269,7 +236,6 @@ class PlainPad(tk.Frame):
                 self.input.tag_remove("italic", "sel.first", "sel.last")
             else:
                 self.input.tag_add("italic", "sel.first", "sel.last")
-            #self.input()
         except:
             pass
 
@@ -288,67 +254,27 @@ class PlainPad(tk.Frame):
                 # self.input.tag_add("bold", "sel.first", "sel.last")
                 self.input.tag_add("italic", "sel.first", "sel.last")
 
-            #current_tags = self.input.tag_names("sel.first")
             # If statment to see if tag has been set
             elif "bold" in current_tags:
                 self.input.tag_remove("bold", "sel.first", "sel.last")
             else:
                 self.input.tag_add("bold", "sel.first", "sel.last")
-            #self.input()
         except:
             pass
-    """
-    def update_text(self):
-        # Create our font
-        style_font = font.Font(self.input, self.input.cget("font"))
-        style_font.configure(weight='bold', slant="italic")
-
-        # Configure a tag
-        self.input.tag_configure("bold_italic", font=style_font)
-
-        # Define Current tags
-        current_tags = self.input.tag_names("sel.first")
-
-        # If statment to see if tag has been set
-        if "bold" in current_tags and "italic" in current_tags:
-            self.input.tag_remove("italic", "sel.first", "sel.last")
-            self.input.tag_remove("bold", "sel.first", "sel.last")
-            self.input.tag_add("bold_italic", "sel.first", "sel.last")
-    """
 
 
 class NoteFrame(tk.Frame):
-    def __init__(self, parent, controller, *args, **kwargs):
+    note_counter = 0
+
+    def __init__(self, parent, controller=None, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
-        """
-        self.parent = parent
-
-        # Intial grid configuration
-        self.parent.grid_rowconfigure(0, weight=1)
-        self.parent.grid_columnconfigure(0, weight=1)
-        self.parent.grid_rowconfigure(1, weight=1)
-
-        # Initialize row counter
-        self.current_row = 0
-
-        # Define empty toolbar
-        self.toolbar = tk.Frame(self, bg="#eee")
-        self.toolbar.grid(row=self.current_row, column=0)
-        self.current_row += 1
-        # self.toolbar.pack(side="top", fill="x")
-
-        # Define format button
-        self.add_code_btn = tk.Button(self.toolbar, text="Add Code Block", command=self.add_code_block)
-        self.add_code_btn.pack(side="right")
-
-        # Add Initial plain text frame
-        PlainPad(parent).grid(row=self.current_row, column=0)
-        self.current_row += 1
-        """
 
         self.controller = controller
 
-        self.name = str(random.Random())
+        self.name = str(random.random())
+        self.id = NoteFrame.note_counter + 0
+        NoteFrame.note_counter += 1
+        print(NoteFrame.note_counter)
         self.date_created = date.today().strftime("%B %d, %Y")
 
         self.note_contents = []
@@ -394,10 +320,6 @@ class NoteFrame(tk.Frame):
         self.toolbar_text_edit = tk.Frame(self.toolbar, bg="#eee")
         self.toolbar_text_edit.grid(row=0, column=0)
 
-        # Toolbar Area 0,1 --> Add Code Button Frame
-        #self.toolbar_text_edit = tk.Frame(self.toolbar, bg="#eee")
-        #self.toolbar.grid(row=0, column=1)
-
         # Define note frame
         self.note_frame = tk.Frame(self.parent)
         self.note_frame.focus()
@@ -419,21 +341,14 @@ class NoteFrame(tk.Frame):
         self.add_code_block_btn = tk.Button(self.toolbar, text="Add Code Block", command=self.add_code_block)
         self.add_code_block_btn.grid(row=0, column=1, sticky="e", padx=(240, 0))
 
-        # Define Text Alteration Tags
-        # Bold
-        # self.bold_font = Font(family=self.font_family, size=self.font_size, weight="bold")
-        # Italics
-        # self.bold_font = Font(family=self.font_family, size=self.font_size, weight="bold")
-        # Underline
-
-        # Add scroll wheel
-
-
         # Define pad list
         self.pad_list = [PlainPad(self.note_frame)]
 
         for pad in self.pad_list:
             pad.pack(fill="x", expand=False)
+
+    def __name__(self):
+        return self.get_title()
 
     # Save contents of note
     def save_note(self):
@@ -452,6 +367,9 @@ class NoteFrame(tk.Frame):
         self.set_title_cmd()
         return self.name
 
+    def get_id(self):
+        return self.id
+
     def get_date(self):
         return self.date_created
 
@@ -463,12 +381,10 @@ class NoteFrame(tk.Frame):
             pad.pack(fill="x", expand=False)
 
     def set_title_cmd(self):
-        print(self.name)
         proposed_name = self.title_field.get()
         if proposed_name == "" or proposed_name in []:  # replace this with a list of all other notes
             return
         self.name = proposed_name
-        print(self.name)
 
     def export_as_txt(self):
         self.set_title_cmd()
