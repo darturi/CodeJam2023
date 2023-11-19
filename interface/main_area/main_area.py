@@ -1,14 +1,12 @@
 import tkinter as tk
 from datetime import datetime
-from tkinter import font
-
 from PIL import Image, ImageTk
 from tkinter import font
 
 # Main Window
 window = tk.Tk()
 window.title("Notes")
-window.geometry("1200x900")
+window.geometry("1280x720")
 
 # Top bar
 header = tk.Frame(window, bg="#8a2be2", height=50)
@@ -18,20 +16,31 @@ header.pack(fill=tk.X)
 title = tk.Label(header, text="OurNotes", font=("Arial", 20, "bold"), bg="#8a2be2", fg="white")
 title.pack(side=tk.LEFT, padx=10)
 
+# Create a list of font families
+font_families = list(font.families())
+
+# Create a StringVar to store the selected font
+selected_font_var = tk.StringVar()
+
+# Set the default font
+selected_font_var.set(font_families[0])
+
 def update_date_label():
     today = datetime.now().strftime("%B %d, %Y")
     date.config(text=today,font=("Times New Roman", 20, "bold"))
 
 def increase_font_size():
     current_size = text.cget("font").split(" ")[-1]
+    current_font = text.cget("font").split(" ")[0]
     new_size = int(current_size) + 2
-    text.configure(font=("Arial", new_size))
+    text.configure(font=(current_font, new_size))
 
 # Function to decrease the text size
 def decrease_font_size():
     current_size = text.cget("font").split(" ")[-1]
+    current_font = text.cget("font").split(" ")[0]
     new_size = max(8, int(current_size) - 2)  # Ensure the font size doesn't go below 8
-    text.configure(font=("Arial", new_size))
+    text.configure(font=(current_font, new_size))
 
 def toggle_text_underline():
     start_index = text.index("sel.first")
@@ -240,22 +249,13 @@ def change_text_font(selected_font):
     tag_name = f"font_{selected_font}"
 
     # Get the indices of the selected text
-    start_index = text.index(tk.SEL_FIRST)
-    end_index = text.index(tk.SEL_LAST)
+    start_index = text.index("sel.first")
+    end_index = text.index("sel.last")
+    current_size = text.cget("font").split(" ")[-1]
 
-    # Apply the font to the selected text using the unique tag
-    text.tag_configure(tag_name, font=selected_font)
     text.tag_add(tag_name, start_index, end_index)
+    text.tag_configure(tag_name, font=(selected_font, current_size))
 
-
-# Create a list of font families
-font_families = list(font.families())
-
-# Create a StringVar to store the selected font
-selected_font_var = tk.StringVar()
-
-# Set the default font
-selected_font_var.set(font_families[0])
 
 # Create an OptionMenu to choose the font
 font_menu = tk.OptionMenu(formatting, selected_font_var, *font_families)
