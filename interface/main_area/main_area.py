@@ -222,4 +222,5 @@ increase_button.pack(side=tk.LEFT, pady=10)
 text = tk.Text(main, font=("Arial", 12), bg="white", fg="black", insertbackground='black')
 text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
+
 window.mainloop()
