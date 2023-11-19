@@ -1,0 +1,18 @@
+newTestPickle
+
+for i in range(10):
+	print("I love kitties") 
+
+def __mmmmmm__():
+	class GottaLoveEm:
+		self.love
+Part 2
+I love them so much its wild
+You would think that a man of my standin
+of such great decorum
+Would be better equipped.
+part 3
+
+
+
+

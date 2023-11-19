@@ -118,13 +118,8 @@ class Pad(tk.Frame):
             offset = '+%dc' % (len(word_key))
             pos_start = self.input.search(search_term, '1.0', "end")
             while pos_start:
-                print(word_key)
-                print("---" + search_term + "---")
-                print(color)
                 # create end position by adding (as string "+5c") number of chars in searched word
                 pos_end = pos_start + offset
-                print("\t" + str(pos_start))
-                print("\t" + str(pos_end))
 
                 # add tag
                 self.input.tag_add(color, pos_start, pos_end)
@@ -140,20 +135,16 @@ class Pad(tk.Frame):
             while pos_start:
                 start = "%s + 0 chars" % pos_start
                 end = "%s + %d chars" % (pos_start, char_count.get())
-                print(enclosure_key)
-                print(start, type(start))
-                print(end)
                 self.input.tag_add(color, start, end)
 
                 pos_start = self.input.search(word_key, end, "end", count=char_count, regexp=True)
 
-    def update_size(self, event):
+    def update_size(self, event=None):
         widget_height = self.get_optimal_height()
         self.input.config(height=widget_height)
 
     def get_optimal_height(self):
         # Calculate the optimal height based on the content
-        widget_height = int(self.input.index(tk.END).split('.')[0])
         widget_width = int(self.input.cget("width"))
 
         line_count = 1
@@ -185,25 +176,43 @@ class PlainPad(tk.Frame):
         self.input.bind("<Key>", self.update_size)
 
         # Defining Font Alterations
+
+        # Single
         self.italics_font = font.Font(self.input, self.input.cget("font"))
         self.italics_font.configure(slant="italic")
         self.bold_font = font.Font(self.input, self.input.cget("font"))
         self.bold_font.configure(weight='bold')
+        self.underline_font = font.Font(self.input, self.input.cget("font"))
+        self.underline_font.configure(underline=True)
+        # Double
         self.bold_italic_font = font.Font(self.input, self.input.cget("font"))
         self.bold_italic_font.configure(weight='bold', slant="italic")
+        self.bold_underline_font = font.Font(self.input, self.input.cget("font"))
+        self.bold_underline_font.configure(weight='bold', underline=True)
+        self.underline_italic_font = font.Font(self.input, self.input.cget("font"))
+        self.underline_italic_font.configure(underline=True, slant="italic")
+        # All
+        self.bold_italic_underline_font = font.Font(self.input, self.input.cget("font"))
+        self.bold_italic_underline_font.configure(underline=True, weight='bold', slant="italic")
 
         # Configure tags
-        self.input.tag_configure("italic", font=self.italics_font)
-        self.input.tag_configure("bold", font=self.bold_font)
-        self.input.tag_configure("bold_italic", font=self.bold_italic_font)
+        # Single
+        self.input.tag_configure("italics_font", font=self.italics_font)
+        self.input.tag_configure("bold_font", font=self.bold_font)
+        self.input.tag_configure("underline_font", font=self.underline_font)
+        # Double
+        self.input.tag_configure("bold_italic_font", font=self.bold_italic_font)
+        self.input.tag_configure("bold_underline_font", font=self.bold_underline_font)
+        self.input.tag_configure("underline_italic_font", font=self.underline_italic_font)
+        # Triple
+        self.input.tag_configure("bold_italic_underline_font", font=self.bold_italic_underline_font)
 
-    def update_size(self, event):
+    def update_size(self, event=None):
         widget_height = self.get_optimal_height()
         self.input.config(height=widget_height)
 
     def get_optimal_height(self):
         # Calculate the optimal height based on the content
-        widget_height = int(self.input.index(tk.END).split('.')[0])
         widget_width = int(self.input.cget("width"))
 
         line_count = 1
@@ -218,24 +227,35 @@ class PlainPad(tk.Frame):
 
         return max(2, line_count)
 
-
     def italics_it(self):
         try:
             # Define Current tags
             current_tags = self.input.tag_names("sel.first")
-            if "bold" in current_tags and "italics" not in current_tags:
-                self.input.tag_remove("bold", "sel.first", "sel.last")
-                self.input.tag_add("bold_italic", "sel.first", "sel.last")
+            for tag in current_tags:
+                if tag != 'sel':
+                    self.input.tag_remove(tag, "sel.first", "sel.last")
+            # Empty
 
-            elif "bold_italic" in current_tags:
-                self.input.tag_remove("bold_italic", "sel.first", "sel.last")
-                self.input.tag_add("bold", "sel.first", "sel.last")
-
-            # If statment to see if tag has been set
-            elif "italic" in current_tags:
-                self.input.tag_remove("italic", "sel.first", "sel.last")
+            # Triple
+            if "bold_italic_underline_font" in current_tags:
+                self.input.tag_add("bold_underline_font", "sel.first", "sel.last")
+            # Double
+            elif "underline_italic_font" in current_tags:
+                self.input.tag_add("underline_font", "sel.first", "sel.last")
+            elif "bold_underline_font" in current_tags:
+                self.input.tag_add("bold_italic_underline_font", "sel.first", "sel.last")
+            elif "bold_italic_font" in current_tags:
+                self.input.tag_add("bold_font", "sel.first", "sel.last")
+            # Single
+            elif "bold_font" in current_tags:
+                self.input.tag_add("bold_italic_font", "sel.first", "sel.last")
+            elif "underline_font" in current_tags:
+                self.input.tag_add("underline_italic_font", "sel.first", "sel.last")
+            elif "italics_font" in current_tags:
+                pass
             else:
-                self.input.tag_add("italic", "sel.first", "sel.last")
+                self.input.tag_add("italics_font", "sel.first", "sel.last")
+
         except:
             pass
 
@@ -243,22 +263,62 @@ class PlainPad(tk.Frame):
         try:
             # Define Current tags
             current_tags = self.input.tag_names("sel.first")
-            # print("Bold")
-            # print('\t', current_tags)
-            if "italic" in current_tags and "bold" not in current_tags:
-                self.input.tag_remove("italic", "sel.first", "sel.last")
-                self.input.tag_add("bold_italic", "sel.first", "sel.last")
+            for tag in current_tags:
+                if tag != 'sel':
+                    self.input.tag_remove(tag, "sel.first", "sel.last")
 
-            elif "bold_italic" in current_tags:
-                self.input.tag_remove("bold_italic", "sel.first", "sel.last")
-                # self.input.tag_add("bold", "sel.first", "sel.last")
-                self.input.tag_add("italic", "sel.first", "sel.last")
-
-            # If statment to see if tag has been set
-            elif "bold" in current_tags:
-                self.input.tag_remove("bold", "sel.first", "sel.last")
+            # Empty
+            if len(current_tags) == 1:
+                self.input.tag_add("bold_font", "sel.first", "sel.last")
+            # Triple
+            elif "bold_italic_underline_font" in current_tags:
+                self.input.tag_add("underline_italic_font", "sel.first", "sel.last")
+            # Double
+            elif "underline_italic_font" in current_tags:
+                self.input.tag_add("bold_italic_underline_font", "sel.first", "sel.last")
+            elif "bold_underline_font" in current_tags:
+                self.input.tag_add("underline_font", "sel.first", "sel.last")
+            elif "bold_italic_font" in current_tags:
+                self.input.tag_add("italics_font", "sel.first", "sel.last")
+            # Single
+            elif "italics_font" in current_tags:
+                self.input.tag_add("bold_italic_font", "sel.first", "sel.last")
+            elif "underline_font" in current_tags:
+                self.input.tag_add("bold_underline_font", "sel.first", "sel.last")
             else:
-                self.input.tag_add("bold", "sel.first", "sel.last")
+                pass
+
+        except:
+            pass
+
+    def underline_it(self):
+        try:
+            # Define Current tags
+            current_tags = self.input.tag_names("sel.first")
+            for tag in current_tags:
+                if tag != 'sel':
+                    self.input.tag_remove(tag, "sel.first", "sel.last")
+
+            if len(current_tags) == 1:
+                self.input.tag_add("underline_font", "sel.first", "sel.last")
+            # Triple
+            elif "bold_italic_underline_font" in current_tags:
+                self.input.tag_add("bold_italic_font", "sel.first", "sel.last")
+            # Double
+            elif "underline_italic_font" in current_tags:
+                self.input.tag_add("italics_font", "sel.first", "sel.last")
+            elif "bold_underline_font" in current_tags:
+                self.input.tag_add("bold_font", "sel.first", "sel.last")
+            elif "bold_italic_font" in current_tags:
+                self.input.tag_add("bold_italic_underline_font", "sel.first", "sel.last")
+            # Single
+            elif "italics_font" in current_tags:
+                self.input.tag_add("underline_italic_font", "sel.first", "sel.last")
+            elif "bold_font" in current_tags:
+                self.input.tag_add("bold_underline_font", "sel.first", "sel.last")
+            else:
+                pass
+
         except:
             pass
 
@@ -274,7 +334,6 @@ class NoteFrame(tk.Frame):
         self.name = str(random.random())
         self.id = NoteFrame.note_counter + 0
         NoteFrame.note_counter += 1
-        print(NoteFrame.note_counter)
         self.date_created = date.today().strftime("%B %d, %Y")
 
         self.note_contents = []
@@ -297,7 +356,7 @@ class NoteFrame(tk.Frame):
         # Grid Within The title area
 
         # Title area 0,0 --> Title entry field
-        self.title_field = tk.Entry(self.title_frame, font="Helvetica 24", width=35)
+        self.title_field = tk.Entry(self.title_frame, font="Helvetica 24", width=72)
         self.title_field.grid(row=0, column=0)
 
         # Title area 0,1 --> Set title button
@@ -334,12 +393,12 @@ class NoteFrame(tk.Frame):
         self.italics_btn.grid(row=0, column=1)
 
         # Toolbar area 0,2 --> underline button
-        self.underline_btn = tk.Button(self.toolbar_text_edit, text="Underline") #, command=self.underline_text_cmd)
+        self.underline_btn = tk.Button(self.toolbar_text_edit, text="Underline", command=self.underline_text_cmd)
         self.underline_btn.grid(row=0, column=2)
 
         # Toolbar area 0,3 --> add code block button
         self.add_code_block_btn = tk.Button(self.toolbar, text="Add Code Block", command=self.add_code_block)
-        self.add_code_block_btn.grid(row=0, column=1, sticky="e", padx=(240, 0))
+        self.add_code_block_btn.grid(row=0, column=1, sticky="e", padx=(729, 0))
 
         # Define pad list
         self.pad_list = [PlainPad(self.note_frame)]
@@ -353,10 +412,11 @@ class NoteFrame(tk.Frame):
     # Save contents of note
     def save_note(self):
         self.set_title_cmd()
+        chunked_text = []
         for pad in self.pad_list:
-            self.note_contents.append(pad.input.get("1.0", "end"))
+            chunked_text.append(pad.input.get("1.0", "end"))
         f = open(self.name + ".pkl", "wb")
-        pickle.dump(self.note_contents, f)
+        pickle.dump(chunked_text, f)
         f.close()
 
     def forget_self(self):
@@ -392,7 +452,6 @@ class NoteFrame(tk.Frame):
         for pad in self.pad_list:
             text_list.append(pad.input.get("1.0", "end"))
         f = open(self.name + ".txt", "w")
-        print(text_list)
         f.write("".join(text_list))
         f.close()
 
@@ -400,6 +459,11 @@ class NoteFrame(tk.Frame):
         for pad in self.pad_list:
             if type(pad) == PlainPad:
                 pad.bold_it()
+
+    def underline_text_cmd(self):
+        for pad in self.pad_list:
+            if type(pad) == PlainPad:
+                pad.underline_it()
 
     def italicize_text_cmd(self):
         for pad in self.pad_list:
