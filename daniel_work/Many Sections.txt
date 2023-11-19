@@ -1,0 +1,22 @@
+This is a snippet
+print("Hello World")
+And this is another little slice of text
+for i in range(10)
+	print(i)
+
+class Example:
+	def __init__():
+		print("plz don't judge the content of this code")
+
+	def (self):
+		print("instead on it's soul and character")
+
+And what's this? Oh! Yet another snippet of text!
+import another_snippet as anotha_snip
+many many snippets
+while and_another_one:
+	if i == 4 and j == 6:
+		print("last one promise")
+	else:
+		print("pinky promise")
+

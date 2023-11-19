@@ -13,6 +13,7 @@ class MainWindow(tk.Frame):
     light_grey = "#f0f0f0"
 
     def __init__(self, parent, *args, **kwargs):
+        raise Exception()
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
 
@@ -146,6 +147,7 @@ class MainWindow(tk.Frame):
         self.frames_dict[frame_id].tkraise()
 
     def new_note_cmd(self):
+        raise Exception()
         self.forget_frame_contents(self.note_frame_sub)
 
         self.intermediate_frame = tk.Frame(self.note_frame_sub, bg=MainWindow.main_foreground)
