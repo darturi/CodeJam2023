@@ -84,7 +84,7 @@ def toggle_text_bold():
         text.tag_add("bold", start_index, end_index)
         if "italic" and "underline" in tags:
             text.tag_configure("bold", font=("Arial", current_size, "underline", "bold", "italic"))
-        elif "underline" in tags:
+        elif "underline" in tags and "italic" not in tags:
             text.tag_configure("bold", font=("Arial", current_size, "underline", "bold"))
         elif "italic" in tags:
             text.tag_configure("bold", font=("Arial", current_size, "italic", "bold"))
@@ -154,7 +154,11 @@ add_code_button = tk.Button(formatting, image=code_image, borderwidth=0, highlig
 add_code_button.pack(side=tk.RIGHT, padx=10, pady=10)
 
 def change_text_color(color):
-    text.config(foreground=color)
+    start_index = text.index("sel.first")
+    end_index = text.index("sel.last")
+    tag_name = f"highlight_{color}"
+    text.tag_add(tag_name, start_index, end_index)
+    text.tag_configure(tag_name, foreground=color)
 
 # Create a list of 10 colors
 color_options = ["Black", "Red", "Green", "Blue", "Purple", "Orange", "Brown", "Pink", "Gray", "Cyan"]
@@ -174,10 +178,6 @@ color_menu.pack(pady=10, side=tk.LEFT)
 apply_button = tk.Button(formatting, text="Apply Color", command=lambda: change_text_color(selected_color.get()), highlightbackground="#f0f0f0")
 apply_button.pack(pady=10, side=tk.LEFT)
 
-# for option in options:
-#     button = tk.Button(formatting, text=option, font=("Arial", 12), bg="#f0f0f0", fg="black", borderwidth=0, highlightbackground="#f0f0f0")
-#     button.pack(side=tk.LEFT, padx=20, pady=10)
-
 # Add the "+" and "-" buttons for adjusting text size
 decrease_button = tk.Button(formatting, text="-", font=("Arial", 12), bg="#f0f0f0", fg="black", command=decrease_font_size, borderwidth=0, highlightbackground="#f0f0f0")
 decrease_button.pack(side=tk.LEFT, pady=10)
@@ -186,7 +186,7 @@ increase_button = tk.Button(formatting, text="+", font=("Arial", 12), bg="#f0f0f
 increase_button.pack(side=tk.LEFT, pady=10)
 
 # Textbox
-text = tk.Text(main, font=("Arial", 12), bg="white", fg="black")
+text = tk.Text(main, font=("Arial", 12), bg="white", fg="black", insertbackground='black')
 text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
 window.mainloop()
