@@ -1,11 +1,13 @@
 import tkinter as tk
 from datetime import datetime
+from tkinter import font
+
 from PIL import Image, ImageTk
 
 # Main Window
 window = tk.Tk()
 window.title("Notes")
-window.geometry("800x600")
+window.geometry("1200x900")
 
 # Top bar
 header = tk.Frame(window, bg="#8a2be2", height=50)
@@ -176,7 +178,38 @@ color_menu.pack(pady=10, side=tk.LEFT)
 
 # Create a button to apply the selected color
 apply_button = tk.Button(formatting, text="Apply Color", command=lambda: change_text_color(selected_color.get()), highlightbackground="#f0f0f0")
-apply_button.pack(pady=10, side=tk.LEFT)
+apply_button.pack(padx=10, side=tk.LEFT)
+
+def change_text_font(selected_font):
+    # Generate a unique tag name based on the font
+    tag_name = f"font_{selected_font}"
+
+    # Get the indices of the selected text
+    start_index = text.index(tk.SEL_FIRST)
+    end_index = text.index(tk.SEL_LAST)
+
+    # Apply the font to the selected text using the unique tag
+    text.tag_configure(tag_name, font=selected_font)
+    text.tag_add(tag_name, start_index, end_index)
+
+
+# Create a list of font families
+font_families = list(font.families())
+
+# Create a StringVar to store the selected font
+selected_font_var = tk.StringVar()
+
+# Set the default font
+selected_font_var.set(font_families[0])
+
+# Create an OptionMenu to choose the font
+font_menu = tk.OptionMenu(formatting, selected_font_var, *font_families)
+font_menu.configure(bg="#f0f0f0", fg="black", activeforeground="black")
+font_menu.pack(pady=10, padx=10, side=tk.LEFT)
+
+# Create a button to apply the selected font to the highlighted text
+apply_button = tk.Button(formatting, text="Apply Font", command=lambda: change_text_font(selected_font_var.get()), highlightbackground="#f0f0f0")
+apply_button.pack(pady=10, padx=10, side=tk.LEFT)
 
 # Add the "+" and "-" buttons for adjusting text size
 decrease_button = tk.Button(formatting, text="-", font=("Arial", 12), bg="#f0f0f0", fg="black", command=decrease_font_size, borderwidth=0, highlightbackground="#f0f0f0")
@@ -188,6 +221,5 @@ increase_button.pack(side=tk.LEFT, pady=10)
 # Textbox
 text = tk.Text(main, font=("Arial", 12), bg="white", fg="black", insertbackground='black')
 text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-
 
 window.mainloop()

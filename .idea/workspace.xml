@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2232263c-0a3c-4c6b-a7bb-bc95124baf1e" name="Changes" comment="With new buttons and bold functionality. Still trying to get rid of black borders">
+    <list default="true" id="2232263c-0a3c-4c6b-a7bb-bc95124baf1e" name="Changes" comment="Interface we have so far">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/main_area/main_area.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface/main_area/main_area.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700345023085</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Interface we have so far">
+      <option name="closed" value="true" />
+      <created>1700349075966</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1700349075966</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,13 +188,14 @@
     <MESSAGE value="test 4 commit barth" />
     <MESSAGE value="Adding directories for interface" />
     <MESSAGE value="With new buttons and bold functionality. Still trying to get rid of black borders" />
-    <option name="LAST_COMMIT_MESSAGE" value="With new buttons and bold functionality. Still trying to get rid of black borders" />
+    <MESSAGE value="Interface we have so far" />
+    <option name="LAST_COMMIT_MESSAGE" value="Interface we have so far" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CodeJam2023$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1700265459625" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CodeJam2023$PythonFormatWindow.coverage" NAME="PythonFormatWindow Coverage Results" MODIFIED="1700348498406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/daniel_work" />
     <SUITE FILE_PATH="coverage/CodeJam2023$left_sidebar.coverage" NAME="left_sidebar Coverage Results" MODIFIED="1700331168941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/left_sidebar" />
     <SUITE FILE_PATH="coverage/CodeJam2023$test.coverage" NAME="test Coverage Results" MODIFIED="1700328152380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/left_sidebar" />
-    <SUITE FILE_PATH="coverage/CodeJam2023$main_area.coverage" NAME="main_area Coverage Results" MODIFIED="1700348494352" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/main_area" />
+    <SUITE FILE_PATH="coverage/CodeJam2023$main_area.coverage" NAME="main_area Coverage Results" MODIFIED="1700359488220" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/main_area" />
   </component>
 </project>
